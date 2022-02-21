@@ -133,7 +133,7 @@ def ScH_sales(merged_data):
     plt.bar(lst3,lst1)
 ScH_sales(merged_data)    
 #%% State Holidays effect on Sales
-def ScH_sales(merged_data):
+def SH_sales(merged_data):
     data=merged_data.copy()
     data.set_index('StateHoliday',inplace=True)
     data.sort_index()
@@ -145,4 +145,4 @@ def ScH_sales(merged_data):
     plt.ylabel('Mean Sales')
     plt.xlabel('State Holidays')
     plt.bar(lst3,lst1)
-ScH_sales(merged_data)    
+SH_sales(merged_data)    
