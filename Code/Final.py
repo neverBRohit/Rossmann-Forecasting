@@ -50,7 +50,7 @@ print(merged_data.isnull().sum())
 def mean_std(merged_data):
     merged_data1=merged_data.copy()
     merged_data1.set_index(['Store','Date'],inplace=True)
-    print(merged_data1)
+    #print(merged_data1)
     lst_s=[]
     lst_m=[]
     lst_std=[]
