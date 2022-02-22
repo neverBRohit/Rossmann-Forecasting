@@ -4,9 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sales=pd.read_csv("sales.csv")
+sales=pd.read_csv("D:\Rohit\Study Books\Sem - 6\LBP\Files\Files\sales.csv")
 print(sales)
-store=pd.read_csv("store.csv")
+store=pd.read_csv("D:\Rohit\Study Books\Sem - 6\LBP\Files\Files\store.csv")
 print(store)
 #%% Changing State Holidays
 def change_StateHolidays(sales):
@@ -133,7 +133,7 @@ def ScH_sales(merged_data):
     plt.bar(lst3,lst1)
 ScH_sales(merged_data)    
 #%% State Holidays effect on Sales
-def ScH_sales(merged_data):
+def SH_sales(merged_data):
     data=merged_data.copy()
     data.set_index('StateHoliday',inplace=True)
     data.sort_index()
@@ -145,4 +145,28 @@ def ScH_sales(merged_data):
     plt.ylabel('Mean Sales')
     plt.xlabel('State Holidays')
     plt.bar(lst3,lst1)
-ScH_sales(merged_data)    
+SH_sales(merged_data)    
+#%% Effect of Promo on Sales
+def Promo_sales(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['Promo','StoreType'],inplace=True)
+    data.set_index(['Promo','StoreType','Store'],inplace=True)
+    #print(data)  
+    lst_m=[]
+    lst_type=['A','B','C','D']
+    lst_1=np.arange(len(lst_type))
+    for i in range(0,2):
+        lst=[]
+        tmp=data.loc[i]
+        for j in ['a','b','c','d']:
+            lst.append(tmp.loc[j,'Sales'].mean())
+        lst_m.append(lst)
+    plt.xticks(lst_1,lst_type)
+    plt.title('Effect of Promo on Sales')
+    plt.ylabel('Mean Sales')
+    plt.xlabel('Store Type')
+    plt.bar(lst_1-0.2,lst_m[1],width=0.5,label='Yes')
+    plt.bar(lst_1+0.2,lst_m[0],width=0.5,label='No')
+    plt.legend()
+    plt.show()
+Promo_sales(merged_data)  
