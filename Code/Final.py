@@ -8,6 +8,7 @@ sales=pd.read_csv("D:\Rohit\Study Books\Sem - 6\LBP\Files\Files\sales.csv")
 print(sales)
 store=pd.read_csv("D:\Rohit\Study Books\Sem - 6\LBP\Files\Files\store.csv")
 print(store)
+
 #%% Changing State Holidays
 def change_StateHolidays(sales):
     SH=list(sales['StateHoliday'])
@@ -25,9 +26,17 @@ def change_StateHolidays(sales):
     sales.insert(loc=7,column="StateHoliday",value=SH)
     print(sales)
 change_StateHolidays(sales)
+
+#%% Changing to Date_time
+print(sales['Date'].dtype)
+sales['Date']=pd.to_datetime(sales['Date'])
+print(sales['Date'].dtype)
+print(sales)
+
 #%% Sorting
 sales=sales.sort_values(['Store','Date'])
 print(sales)
+
 #%% Cleansing
 def remove_stores_with_missingData(sales):
     sales.set_index(['Store'],inplace=True)
@@ -39,13 +48,16 @@ def remove_stores_with_missingData(sales):
     sales.reset_index(inplace=True)
     print(sales)
 remove_stores_with_missingData(sales)
+
 #%% Checking for Null Values
 print(sales.isnull().sum())        
+
 #%% Merging and Checking for Null Values
 merged_data=pd.merge(sales,store,on='Store',how='left')
 print(merged_data)
 #data_merged.to_csv("final.csv")
 print(merged_data.isnull().sum())     
+
 #%% Mean vs. STD plot
 def mean_std(merged_data):
     merged_data1=merged_data.copy()
@@ -70,6 +82,7 @@ def mean_std(merged_data):
     plt.xlabel('Mean')
     plt.title('Mean vs. STD chart')
 mean_std(merged_data)
+
 #%% Store Type Pie Chart 
 def Store_type(merged_data):
     data=merged_data.copy()
@@ -86,6 +99,7 @@ def Store_type(merged_data):
     plt.title('Store Type Effect on Sales')
     plt.show()
 Store_type(merged_data)
+
 #%% Assortment Type Pie Chart
 def Assortment_type(merged_data):
     data=merged_data.copy()
@@ -102,6 +116,7 @@ def Assortment_type(merged_data):
     plt.title('Assortment Level Effect on Sales')
     plt.show()
 Assortment_type(merged_data)
+
 #%% Day of Week effect on Sales
 def DoW_sales(merged_data):
     data=merged_data.copy()
@@ -118,6 +133,7 @@ def DoW_sales(merged_data):
     plt.xlabel('Day of Week')
     plt.bar(lst3,lst)
 DoW_sales(merged_data)
+
 #%% School Holidays effect on Sales
 def ScH_sales(merged_data):
     data=merged_data.copy()
@@ -132,6 +148,7 @@ def ScH_sales(merged_data):
     plt.xlabel('Shool Holidays')
     plt.bar(lst3,lst1)
 ScH_sales(merged_data)    
+
 #%% State Holidays effect on Sales
 def SH_sales(merged_data):
     data=merged_data.copy()
@@ -146,6 +163,7 @@ def SH_sales(merged_data):
     plt.xlabel('State Holidays')
     plt.bar(lst3,lst1)
 SH_sales(merged_data)    
+
 #%% Effect of Promo on Sales
 def Promo_sales(merged_data):
     data=merged_data.copy()
@@ -170,3 +188,33 @@ def Promo_sales(merged_data):
     plt.legend()
     plt.show()
 Promo_sales(merged_data)  
+
+#%% Effect of Competetion Distance
+def Compdis_sales(merged_data):
+    data=merged_data.copy()
+    data.dropna(axis=0,subset=['CompetitionDistance'],how='any',inplace=True)
+    #print(data.dtypes)    
+    Min=data['CompetitionDistance'].min()
+    Max=data['CompetitionDistance'].max()
+    first=Min+((Max-Min)//4)
+    second=Min+((Max-Min)//2)
+    third=Max-((Max-Min)//4)
+    lst=['Ver Close','Close','Moderate','Far']
+    lst1=np.arange(len(lst))
+    vc=data.loc[(data['CompetitionDistance'] >= Min)&(data['CompetitionDistance'] < first),'Sales'].mean()
+    c=data.loc[(data['CompetitionDistance'] >= first)&(data['CompetitionDistance'] < second),'Sales'].mean()
+    m=data.loc[(data['CompetitionDistance'] >= second)&(data['CompetitionDistance'] < third),'Sales'].mean()
+    f=data.loc[data['CompetitionDistance'] >= third,'Sales'].mean()
+    lst2=[vc,c,m,f]
+    plt.xticks(lst1,lst)
+    plt.title('Effect of Competition Distance on Sales')
+    plt.ylabel('Mean Sales')
+    plt.xlabel('Competition Distance')
+    plt.bar(lst1,lst2,width=0.5)
+    plt.show()
+Compdis_sales(merged_data)
+
+#%% Effect of Competition Presence
+def Compopn_sales(merged_data):
+    
+Compopn_sales(merged_data)
