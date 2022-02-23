@@ -163,6 +163,7 @@ def SH_sales(merged_data):
     plt.xlabel('State Holidays')
     plt.bar(lst3,lst1)
 SH_sales(merged_data)    
+<<<<<<< HEAD
 
 #%% Effect of Promo on Sales
 def Promo_sales(merged_data):
@@ -218,3 +219,5 @@ Compdis_sales(merged_data)
 def Compopn_sales(merged_data):
     
 Compopn_sales(merged_data)
+=======
+>>>>>>> 0a7efc3938c34adf9232afbc0a146cd1a70944ae
