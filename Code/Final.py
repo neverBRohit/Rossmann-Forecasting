@@ -4,9 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sales=pd.read_csv("D:\Rohit\Study Books\Sem - 6\LBP\Files\Files\sales.csv")
+sales=pd.read_csv("Files/sales.csv")
 print(sales)
-store=pd.read_csv("D:\Rohit\Study Books\Sem - 6\LBP\Files\Files\store.csv")
+store=pd.read_csv("Files/store.csv")
 print(store)
 
 #%% Changing State Holidays
@@ -44,7 +44,6 @@ def remove_stores_with_missingData(sales):
     for i in range(1,1116):
         if len(sales.loc[i])!=942:
             sales.drop(i,axis=0,inplace=True)
-    print(sales)
     sales.reset_index(inplace=True)
     print(sales)
 remove_stores_with_missingData(sales)
@@ -163,7 +162,6 @@ def SH_sales(merged_data):
     plt.xlabel('State Holidays')
     plt.bar(lst3,lst1)
 SH_sales(merged_data)    
-<<<<<<< HEAD
 
 #%% Effect of Promo on Sales
 def Promo_sales(merged_data):
@@ -190,7 +188,7 @@ def Promo_sales(merged_data):
     plt.show()
 Promo_sales(merged_data)  
 
-#%% Effect of Competetion Distance
+#%% Effect of Competition Distance
 def Compdis_sales(merged_data):
     data=merged_data.copy()
     data.dropna(axis=0,subset=['CompetitionDistance'],how='any',inplace=True)
@@ -200,7 +198,7 @@ def Compdis_sales(merged_data):
     first=Min+((Max-Min)//4)
     second=Min+((Max-Min)//2)
     third=Max-((Max-Min)//4)
-    lst=['Ver Close','Close','Moderate','Far']
+    lst=['Very Close','Close','Moderate','Far']
     lst1=np.arange(len(lst))
     vc=data.loc[(data['CompetitionDistance'] >= Min)&(data['CompetitionDistance'] < first),'Sales'].mean()
     c=data.loc[(data['CompetitionDistance'] >= first)&(data['CompetitionDistance'] < second),'Sales'].mean()
@@ -215,9 +213,8 @@ def Compdis_sales(merged_data):
     plt.show()
 Compdis_sales(merged_data)
 
-#%% Effect of Competition Presence
-def Compopn_sales(merged_data):
-    
-Compopn_sales(merged_data)
-=======
->>>>>>> 0a7efc3938c34adf9232afbc0a146cd1a70944ae
+#%% Removing Competition info
+merged_data.drop(['CompetitionDistance','CompetitionOpenSinceMonth','CompetitionOpenSinceYear'],axis=1,inplace=True)
+print(merged_data.head()) 
+
+
