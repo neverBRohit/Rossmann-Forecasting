@@ -217,7 +217,7 @@ Compdis_sales(merged_data)
 #%% Removing Competition info
 merged_data.drop(['CompetitionDistance','CompetitionOpenSinceMonth','CompetitionOpenSinceYear'],axis=1,inplace=True)
 print(merged_data.head()) 
-merged_data.to_csv("D:/Rohit/Study Books/Sem - 6/LBP/Files/Files/Final.csv")
+
 #%% StoreType Variation of Sales with Promos
 def Storetype_promos(merged_data):
     data=merged_data.copy()
@@ -320,7 +320,7 @@ def Storetype_schoolholidays_promos(merged_data):
     data.sort_values(['SchoolHoliday','StoreType','Promo','Date'],inplace=True)
     data.set_index(['SchoolHoliday','StoreType','Promo','Date','Store'],inplace=True)
     print(data.head())
-
+    
     data_1=data.loc[1]
     for i in 'abcd':
         data_111=data_1.loc[i]
@@ -416,6 +416,7 @@ def Assortmenttype_promos(merged_data):
         plt.legend()
         plt.show()       
 Assortmenttype_promos(merged_data)
+
 #%% StoreType Variation of Sales with Holidays
 def Assortmenttype_stateholidays_promos(merged_data):
     data=merged_data.copy()
@@ -514,4 +515,4 @@ def Assortmenttype_schoolholidays_promos(merged_data):
         plt.show() 
 Assortmenttype_schoolholidays_promos(merged_data)
 
-#%% The End
+#%% Over to Forecasting
