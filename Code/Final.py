@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
 sales=pd.read_csv("Files/sales.csv")
 print(sales)
 store=pd.read_csv("Files/store.csv")
@@ -216,5 +217,301 @@ Compdis_sales(merged_data)
 #%% Removing Competition info
 merged_data.drop(['CompetitionDistance','CompetitionOpenSinceMonth','CompetitionOpenSinceYear'],axis=1,inplace=True)
 print(merged_data.head()) 
+merged_data.to_csv("D:/Rohit/Study Books/Sem - 6/LBP/Files/Files/Final.csv")
+#%% StoreType Variation of Sales with Promos
+def Storetype_promos(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['StoreType','Promo','Date'],inplace=True)
+    data.set_index(['StoreType','Promo','Date','Store'],inplace=True)
+    print(data.head())
+    for i in 'abcd':
+        data_1=data.loc[i]
+        data_11=data_1.loc[0]
+        data_12=data_1.loc[1]
+        A=data_11.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_11.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_11.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_11.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_11.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_11.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_11.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_11.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_11.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_11.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_0=[A,B,C,D,E,F,G,H,I,J]
+        A=data_12.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_12.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_12.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_12.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_12.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_12.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_12.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_12.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_12.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_12.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_1=[A,B,C,D,E,F,G,H,I,J]
+        x=['2013\nQ1','2013\nQ2','2013\nQ3','2013\nQ4','2014\nQ1','2014\nQ2','2014\nQ3','2014\nQ4','2015\nQ1','2015\nQ2']
+        plt.plot(x,lst_0,linestyle='dashed',marker='D',label='Promo = 0')
+        plt.plot(x,lst_1,linestyle='dashed',marker='D',label='Promo = 1')
+        plt.xlabel('Dates')
+        plt.ylabel('Avg. Sales')
+        plt.title('Promo-Sales Analysis for StoreType {}'.format(i.upper()))
+        plt.legend()
+        plt.show()       
+Storetype_promos(merged_data)
 
+#%% StoreType Variation of Sales with Holidays
+def Storetype_stateholidays_promos(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['StateHoliday','StoreType','Promo','Date'],inplace=True)
+    data.set_index(['StateHoliday','StoreType','Promo','Date','Store'],inplace=True)
+    print(data.head())
 
+    data_1=data.loc[1]
+    lst=['A','B','C','D']
+    lst1=np.arange(len(lst))
+    lst2=[]
+    for i in 'abcd':
+        lst2.append(data_1.loc[i,'Sales'].mean())
+    plt.xticks(lst1,lst)
+    plt.title('Sales on State Holidays')
+    plt.ylabel('Mean Sales')
+    plt.xlabel('Store Types')
+    plt.bar(lst1,lst2,width=0.5)
+    plt.show()    
+    data_111=data_1.loc['b']
+    data_11=data_111.loc[0]
+    data_12=data_111.loc[1]
+    A=data_11.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+    B=data_11.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+    C=data_11.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+    D=data_11.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+    E=data_11.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+    F=data_11.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+    G=data_11.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+    H=data_11.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+    I=data_11.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+    J=data_11.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+    lst_0=[A,B,C,D,E,F,G,H,I,J]
+    A=data_12.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+    B=data_12.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+    C=data_12.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+    D=data_12.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+    E=data_12.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+    F=data_12.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+    G=data_12.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+    H=data_12.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+    I=data_12.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+    J=data_12.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+    lst_1=[A,B,C,D,E,F,G,H,I,J]
+    x=['2013\nQ1','2013\nQ2','2013\nQ3','2013\nQ4','2014\nQ1','2014\nQ2','2014\nQ3','2014\nQ4','2015\nQ1','2015\nQ2']
+    plt.plot(x,lst_0,linestyle='dashed',marker='D',label='Promo = 0')
+    plt.plot(x,lst_1,linestyle='dashed',marker='D',label='Promo = 1')
+    plt.xlabel('Dates')
+    plt.ylabel('Avg. Sales')
+    plt.title('Promo-Sales Analysis for StoreType B on State Holidays')
+    plt.legend()
+    plt.show() 
+Storetype_stateholidays_promos(merged_data)
+    
+#%% StoreType Variation of Sales with School Holidays
+def Storetype_schoolholidays_promos(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['SchoolHoliday','StoreType','Promo','Date'],inplace=True)
+    data.set_index(['SchoolHoliday','StoreType','Promo','Date','Store'],inplace=True)
+    print(data.head())
+
+    data_1=data.loc[1]
+    for i in 'abcd':
+        data_111=data_1.loc[i]
+        data_11=data_111.loc[0]
+        data_12=data_111.loc[1]
+        A=data_11.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_11.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_11.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_11.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_11.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_11.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_11.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_11.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_11.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_11.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_0=[A,B,C,D,E,F,G,H,I,J]
+        A=data_12.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_12.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_12.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_12.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_12.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_12.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_12.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_12.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_12.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_12.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_1=[A,B,C,D,E,F,G,H,I,J]
+        x=['2013\nQ1','2013\nQ2','2013\nQ3','2013\nQ4','2014\nQ1','2014\nQ2','2014\nQ3','2014\nQ4','2015\nQ1','2015\nQ2']
+        plt.plot(x,lst_0,linestyle='dashed',marker='D',label='Promo = 0')
+        plt.plot(x,lst_1,linestyle='dashed',marker='D',label='Promo = 1')
+        plt.xlabel('Dates')
+        plt.ylabel('Avg. Sales')
+        plt.title('Promo-Sales Analysis for StoreType {} on School Holidays'.format(i.upper()))
+        plt.legend()
+        plt.show() 
+Storetype_schoolholidays_promos(merged_data)
+
+#%% Number of stores in each Assortment type
+def assortment_type_distribution(merged_data):
+    data=store.copy()
+    data.sort_values(['Assortment'],inplace=True)
+    data.set_index(['Assortment'],inplace=True)
+    print(data.head())
+    lst=[]
+    lst_1=['a','b','c']
+    sm=0
+    for i in lst_1:
+        sm+=len(data.loc[i])
+        lst.append(len(data.loc[i]))
+    plt.pie(lst,labels=lst_1,colors=['r','g','b'],shadow=True,autopct = '%1.1f%%')
+    plt.title('Stores Distribution According to Assortment Type')
+    plt.show()
+assortment_type_distribution(merged_data)
+
+#%% AssortmentType Variation of Sales with Promos
+def Assortmenttype_promos(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['Assortment','Promo','Date'],inplace=True)
+    data.set_index(['Assortment','Promo','Date','Store'],inplace=True)
+    print(data.head())
+    for i in 'abc':
+        data_1=data.loc[i]
+        data_11=data_1.loc[0]
+        data_12=data_1.loc[1]
+        A=data_11.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_11.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_11.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_11.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_11.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_11.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_11.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_11.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_11.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_11.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_0=[A,B,C,D,E,F,G,H,I,J]
+        A=data_12.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_12.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_12.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_12.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_12.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_12.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_12.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_12.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_12.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_12.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_1=[A,B,C,D,E,F,G,H,I,J]
+        x=['2013\nQ1','2013\nQ2','2013\nQ3','2013\nQ4','2014\nQ1','2014\nQ2','2014\nQ3','2014\nQ4','2015\nQ1','2015\nQ2']
+        plt.plot(x,lst_0,linestyle='dashed',marker='D',label='Promo = 0')
+        plt.plot(x,lst_1,linestyle='dashed',marker='D',label='Promo = 1')
+        plt.xlabel('Dates')
+        plt.ylabel('Avg. Sales')
+        plt.title('Promo-Sales Analysis for AssortmentType {}'.format(i.upper()))
+        plt.legend()
+        plt.show()       
+Assortmenttype_promos(merged_data)
+#%% StoreType Variation of Sales with Holidays
+def Assortmenttype_stateholidays_promos(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['StateHoliday','Assortment','Promo','Date'],inplace=True)
+    data.set_index(['StateHoliday','Assortment','Promo','Date','Store'],inplace=True)
+    print(data.head())
+
+    data_1=data.loc[1]
+    lst=['A','B','C']
+    lst1=np.arange(len(lst))
+    lst2=[]
+    for i in 'abc':
+        lst2.append(data_1.loc[i,'Sales'].mean())
+    plt.xticks(lst1,lst)
+    plt.title('Sales on State Holidays')
+    plt.ylabel('Mean Sales')
+    plt.xlabel('Store Types')
+    plt.bar(lst1,lst2,width=0.5)
+    plt.show()    
+    data_111=data_1.loc['b']
+    data_11=data_111.loc[0]
+    data_12=data_111.loc[1]
+    A=data_11.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+    B=data_11.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+    C=data_11.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+    D=data_11.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+    E=data_11.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+    F=data_11.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+    G=data_11.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+    H=data_11.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+    I=data_11.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+    J=data_11.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+    lst_0=[A,B,C,D,E,F,G,H,I,J]
+    A=data_12.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+    B=data_12.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+    C=data_12.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+    D=data_12.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+    E=data_12.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+    F=data_12.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+    G=data_12.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+    H=data_12.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+    I=data_12.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+    J=data_12.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+    lst_1=[A,B,C,D,E,F,G,H,I,J]
+    x=['2013\nQ1','2013\nQ2','2013\nQ3','2013\nQ4','2014\nQ1','2014\nQ2','2014\nQ3','2014\nQ4','2015\nQ1','2015\nQ2']
+    plt.plot(x,lst_0,linestyle='dashed',marker='D',label='Promo = 0')
+    plt.plot(x,lst_1,linestyle='dashed',marker='D',label='Promo = 1')
+    plt.xlabel('Dates')
+    plt.ylabel('Avg. Sales')
+    plt.title('Promo-Sales Analysis for AssortmentType B on State Holidays')
+    plt.legend()
+    plt.show()
+Assortmenttype_stateholidays_promos(merged_data)
+    
+#%% StoreType Variation of Sales with School Holidays
+def Assortmenttype_schoolholidays_promos(merged_data):
+    data=merged_data.copy()
+    data.sort_values(['SchoolHoliday','Assortment','Promo','Date'],inplace=True)
+    data.set_index(['SchoolHoliday','Assortment','Promo','Date','Store'],inplace=True)
+    print(data.head())
+
+    data_1=data.loc[1]
+    for i in 'abc':
+        data_111=data_1.loc[i]
+        data_11=data_111.loc[0]
+        data_12=data_111.loc[1]
+        A=data_11.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_11.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_11.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_11.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_11.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_11.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_11.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_11.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_11.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_11.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_0=[A,B,C,D,E,F,G,H,I,J]
+        A=data_12.loc[pd.to_datetime('2013-01-01'):pd.to_datetime('2013-04-01'),'Sales'].mean()
+        B=data_12.loc[pd.to_datetime('2013-04-01'):pd.to_datetime('2013-07-01'),'Sales'].mean()
+        C=data_12.loc[pd.to_datetime('2013-07-01'):pd.to_datetime('2013-10-01'),'Sales'].mean()
+        D=data_12.loc[pd.to_datetime('2013-10-01'):pd.to_datetime('2014-01-01'),'Sales'].mean()
+        E=data_12.loc[pd.to_datetime('2014-01-01'):pd.to_datetime('2014-04-01'),'Sales'].mean()
+        F=data_12.loc[pd.to_datetime('2014-04-01'):pd.to_datetime('2014-07-01'),'Sales'].mean()
+        G=data_12.loc[pd.to_datetime('2014-07-01'):pd.to_datetime('2014-10-01'),'Sales'].mean()
+        H=data_12.loc[pd.to_datetime('2014-10-01'):pd.to_datetime('2015-01-01'),'Sales'].mean()
+        I=data_12.loc[pd.to_datetime('2015-01-01'):pd.to_datetime('2015-04-01'),'Sales'].mean()
+        J=data_12.loc[pd.to_datetime('2015-04-01'):pd.to_datetime('2015-08-01'),'Sales'].mean()
+        lst_1=[A,B,C,D,E,F,G,H,I,J]
+        x=['2013\nQ1','2013\nQ2','2013\nQ3','2013\nQ4','2014\nQ1','2014\nQ2','2014\nQ3','2014\nQ4','2015\nQ1','2015\nQ2']
+        plt.plot(x,lst_0,linestyle='dashed',marker='D',label='Promo = 0')
+        plt.plot(x,lst_1,linestyle='dashed',marker='D',label='Promo = 1')
+        plt.xlabel('Dates')
+        plt.ylabel('Avg. Sales')
+        plt.title('Promo-Sales Analysis for AssortmentType {} on School Holidays'.format(i.upper()))
+        plt.legend()
+        plt.show() 
+Assortmenttype_schoolholidays_promos(merged_data)
+
+#%% The End
